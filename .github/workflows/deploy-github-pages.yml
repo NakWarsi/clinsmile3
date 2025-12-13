@@ -35,11 +35,36 @@ jobs:
         run: |
           REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
           npx ng build --configuration production --base-href=/$REPO_NAME/ --output-path=dist/DentrizWeb/browser
+          # Verify build succeeded
+          if [ ! -f "dist/DentrizWeb/browser/index.html" ]; then
+            echo "Build failed: index.html not found"
+            exit 1
+          fi
+          echo "Build completed successfully"
 
-      - name: Create 404.html for GitHub Pages routing
+      - name: Verify build output and create 404.html
         run: |
-          # Copy index.html to 404.html for GitHub Pages SPA routing support
-          cp dist/DentrizWeb/browser/index.html dist/DentrizWeb/browser/404.html
+          # Verify the build output exists
+          if [ ! -d "dist/DentrizWeb/browser" ]; then
+            echo "Error: Build output directory not found"
+            ls -la dist/ || echo "dist directory does not exist"
+            exit 1
+          fi
+          
+          # List contents for debugging
+          echo "Build output contents:"
+          ls -la dist/DentrizWeb/browser/ || echo "browser directory does not exist"
+          
+          # Check if index.html exists
+          if [ -f "dist/DentrizWeb/browser/index.html" ]; then
+            echo "Copying index.html to 404.html for GitHub Pages SPA routing support"
+            cp dist/DentrizWeb/browser/index.html dist/DentrizWeb/browser/404.html
+            echo "404.html created successfully"
+          else
+            echo "Error: index.html not found in build output"
+            find dist -name "index.html" -type f || echo "No index.html found anywhere"
+            exit 1
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
