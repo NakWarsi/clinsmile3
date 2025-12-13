@@ -34,7 +34,7 @@ jobs:
       - name: Build
         run: |
           REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
-          ng build --configuration production --base-href=/$REPO_NAME/ --output-path=dist/DentrizWeb/browser
+          npx ng build --configuration production --base-href=/$REPO_NAME/ --output-path=dist/DentrizWeb/browser
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
