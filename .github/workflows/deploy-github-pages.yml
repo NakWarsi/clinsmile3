@@ -36,6 +36,11 @@ jobs:
           REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
           npx ng build --configuration production --base-href=/$REPO_NAME/ --output-path=dist/DentrizWeb/browser
 
+      - name: Create 404.html for GitHub Pages routing
+        run: |
+          # Copy index.html to 404.html for GitHub Pages SPA routing support
+          cp dist/DentrizWeb/browser/index.html dist/DentrizWeb/browser/404.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
