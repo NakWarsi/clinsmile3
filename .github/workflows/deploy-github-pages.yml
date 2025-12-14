@@ -34,8 +34,15 @@ jobs:
       - name: Build
         run: |
           REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          echo "Building with base-href: /$REPO_NAME/"
           npx ng build --configuration production --base-href=/$REPO_NAME/ --output-path=dist/DentrizWeb/browser
           echo "Build completed"
+          
+          # Verify base-href was applied
+          if [ -f "dist/DentrizWeb/browser/index.html" ]; then
+            echo "Checking base-href in built index.html:"
+            grep -o '<base href="[^"]*"' dist/DentrizWeb/browser/index.html || echo "No base tag found"
+          fi
 
       - name: Verify build output and create 404.html
         run: |
@@ -82,6 +89,39 @@ jobs:
           echo ""
           echo "=== File Verification ==="
           ls -lh "$BROWSER_ROOT/index.html" "$BROWSER_ROOT/404.html"
+          
+          # Fix base-href and rewrite absolute asset paths
+          REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          echo ""
+          echo "=== Fixing base-href and asset paths ==="
+          
+          # Fix base-href if needed
+          if grep -q '<base href="/">' "$BROWSER_ROOT/index.html"; then
+            echo "Fixing base-href from '/' to '/$REPO_NAME/'"
+            sed -i "s|<base href=\"/\">|<base href=\"/$REPO_NAME/\">|g" "$BROWSER_ROOT/index.html"
+            sed -i "s|<base href=\"/\">|<base href=\"/$REPO_NAME/\">|g" "$BROWSER_ROOT/404.html"
+            echo "✓ Base-href fixed"
+          else
+            echo "Base-href already correct"
+          fi
+          
+          # Rewrite absolute paths to respect base-href
+          # Fix /images/ paths to /$REPO_NAME/images/
+          echo "Rewriting absolute asset paths..."
+          sed -i "s|src=\"/images/|src=\"/$REPO_NAME/images/|g" "$BROWSER_ROOT/index.html"
+          sed -i "s|src=\"/images/|src=\"/$REPO_NAME/images/|g" "$BROWSER_ROOT/404.html"
+          sed -i "s|href=\"/images/|href=\"/$REPO_NAME/images/|g" "$BROWSER_ROOT/index.html"
+          sed -i "s|href=\"/images/|href=\"/$REPO_NAME/images/|g" "$BROWSER_ROOT/404.html"
+          
+          # Also fix in all other HTML files
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src=\"/images/|src=\"/$REPO_NAME/images/|g" {} \;
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"/images/|href=\"/$REPO_NAME/images/|g" {} \;
+          
+          echo "✓ Asset paths rewritten"
+          
+          # Verify base-href after fix
+          echo "Final base-href check:"
+          grep -o '<base href="[^"]*"' "$BROWSER_ROOT/index.html" | head -1
 
       - name: Verify final artifact structure
         run: |
@@ -93,10 +133,46 @@ jobs:
           echo "Checking for critical files:"
           [ -f "$BROWSER_ROOT/index.html" ] && echo "✓ index.html exists" || echo "✗ index.html MISSING"
           [ -f "$BROWSER_ROOT/404.html" ] && echo "✓ 404.html exists" || echo "✗ 404.html MISSING"
-          [ -f "$BROWSER_ROOT/main-"*.js ] && echo "✓ main JS bundle exists" || echo "✗ main JS bundle MISSING"
+          
+          # Check for JS files
+          JS_FILES=$(find "$BROWSER_ROOT" -name "main-*.js" -type f)
+          if [ -n "$JS_FILES" ]; then
+            echo "✓ main JS bundle exists:"
+            echo "$JS_FILES" | head -3
+          else
+            echo "✗ main JS bundle MISSING"
+          fi
+          
+          # Check for CSS files
+          CSS_FILES=$(find "$BROWSER_ROOT" -name "styles-*.css" -type f)
+          if [ -n "$CSS_FILES" ]; then
+            echo "✓ styles CSS exists:"
+            echo "$CSS_FILES" | head -3
+          else
+            echo "✗ styles CSS MISSING"
+          fi
+          
+          # Check for images directory
+          if [ -d "$BROWSER_ROOT/images" ]; then
+            echo "✓ images directory exists"
+            echo "Images found:"
+            find "$BROWSER_ROOT/images" -type f | head -10
+          else
+            echo "✗ images directory MISSING"
+            echo "Searching for images in build output:"
+            find "$BROWSER_ROOT" -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" | head -10
+          fi
+          
           echo ""
           echo "Total files in artifact:"
           find "$BROWSER_ROOT" -type f | wc -l
+          
+          # Check base-href in index.html
+          echo ""
+          echo "=== Checking base-href in index.html ==="
+          if [ -f "$BROWSER_ROOT/index.html" ]; then
+            grep -o '<base href="[^"]*"' "$BROWSER_ROOT/index.html" || echo "No base tag found"
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
