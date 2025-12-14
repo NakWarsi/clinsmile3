@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FounderSectionApiService, SimpleFounderConfig } from './services/founder-section-api.service';
 import { NewPatientSectionApiService, SimpleNewPatientConfig } from './services/new-patient-section-api.service';
 import { ReasonsSectionApiService, SimpleReasonsConfig } from './services/reasons-section-api.service';
@@ -14,7 +15,8 @@ import { GlobalConfigService, GlobalConfig } from '../config/global-config.servi
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
+  host: { ngSkipHydration: '' }
 })
 export class HomeComponent implements OnInit, OnDestroy {
   // Founder section properties (following reference project pattern)
@@ -61,34 +63,42 @@ export class HomeComponent implements OnInit, OnDestroy {
     private newPatientSectionApiService: NewPatientSectionApiService,
     private reasonsSectionApiService: ReasonsSectionApiService,
     private servicesSectionApiService: ServicesSectionApiService,
-    private globalConfigService: GlobalConfigService
+    private globalConfigService: GlobalConfigService,
+    private sanitizer: DomSanitizer
   ) {}
 
-  // Clinic images carousel
+  // Helper method to sanitize HTML content for innerHTML
+  // Using bypassSecurityTrustHtml to preserve HTML structure for hydration consistency
+  sanitizeHtml(html: string): SafeHtml {
+    if (!html) return '';
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  // Clinic images carousel - using relative paths for GitHub Pages compatibility
   clinicImages = [
     {
-      src: '/images/clinic/clinic-exterior.jpg',
+      src: 'images/clinic/clinic-exterior.jpg',
       alt: 'ClinSmile Dental Clinic Exterior',
       caption: 'Modern Dental Clinic'
     },
     {
-      src: '/images/clinic/clinic-interior.jpg',
+      src: 'images/clinic/clinic-interior.jpg',
       alt: 'ClinSmile Dental Clinic Interior',
       caption: 'State-of-the-Art Equipment'
     },
     // Add PNG images directly
     {
-      src: '/images/clinic/1.jpg',
+      src: 'images/clinic/1.jpg',
       alt: 'ClinSmile Dental Clinic - Treatment Room',
       caption: 'Advanced Treatment Facilities'
     },
     {
-      src: '/images/clinic/2.png',
+      src: 'images/clinic/2.png',
       alt: 'ClinSmile Dental Clinic - Waiting Area',
       caption: 'Comfortable Waiting Area'
     },
     {
-      src: '/images/clinic/3.png',
+      src: 'images/clinic/3.png',
       alt: 'ClinSmile Dental Clinic - Modern Dental Chair',
       caption: 'State-of-the-Art Dental Equipment'
     }

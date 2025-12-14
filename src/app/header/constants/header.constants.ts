@@ -1,7 +1,7 @@
 export const HEADER_CONSTANTS = {
   // Header Logo Section
   DEFAULT_LOGO_ALT: 'ClinSmile Dental Clinic Logo',
-  DEFAULT_LOGO_IMAGE: '/images/clinic/logo.png',
+  DEFAULT_LOGO_IMAGE: 'images/clinic/logo.png',
   DEFAULT_CLINIC_NAME: 'ClinSmile Dental Clinic',
   DEFAULT_TAGLINE: 'Multi Speciality Dental Clinic & Implant Center',
 

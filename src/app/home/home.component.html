@@ -537,7 +537,7 @@
                  [style.color]="newPatientConfig.addressContentColor"
                  [style.font-family]="newPatientConfig.addressContentFontFamily"
                  (click)="startInlineEditNewPatient('addressContent')"
-                 [innerHTML]="newPatientConfig.addressContent">
+                 [innerHTML]="sanitizeHtml(newPatientConfig.addressContent)">
                 <span class="edit-icon" *ngIf="globalConfig.showEditButtons && isEditingNewPatient">✏️</span>
               </p>
               <textarea *ngIf="isEditingNewPatient && editingNewPatientElement === 'addressContent'"
@@ -971,7 +971,7 @@
            [style.font-family]="reasonsConfig.sectionIntroFontFamily"
            *ngIf="!isEditingReasons || editingReasonsElement !== 'sectionIntro'"
            (click)="startInlineEditReasons('sectionIntro')"
-           [innerHTML]="reasonsConfig.sectionIntro">
+           [innerHTML]="sanitizeHtml(reasonsConfig.sectionIntro)">
           <span class="edit-icon" *ngIf="globalConfig.showEditButtons && isEditingReasons">✏️</span>
         </p>
         <textarea *ngIf="isEditingReasons && editingReasonsElement === 'sectionIntro'"
