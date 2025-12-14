@@ -111,24 +111,18 @@ jobs:
             echo "✓ Base-href fixed in all HTML files"
           fi
           
-          # Rewrite asset paths to be absolute and respect base-href
-          echo "Rewriting asset paths in all HTML files..."
+          # Fix absolute image paths to be relative (they should respect base-href)
+          echo "Fixing absolute image paths..."
+          # Convert absolute paths like /images/ to relative paths that work with base-href
+          # Since base-href is /$REPO_NAME/, absolute paths /images/ should become images/ (relative)
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src=\"/images/|src=\"images/|g" {} \;
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"/images/|href=\"images/|g" {} \;
           
-          # Fix absolute image paths
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src=\"/images/|src=\"/$REPO_NAME/images/|g" {} \;
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"/images/|href=\"/$REPO_NAME/images/|g" {} \;
+          # DO NOT convert relative JS/CSS paths - they should stay relative
+          # With correct base-href, relative paths will resolve correctly
+          # The browser will request /clinsmile3/main-XXX.js, and GitHub Pages will serve from artifact root
           
-          # Convert relative JS/CSS paths to absolute paths that respect base-href
-          # Pattern: href="styles-XXX.css" or src="main-XXX.js" (relative) -> href="/$REPO_NAME/styles-XXX.css"
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"styles-|href=\"/$REPO_NAME/styles-|g" {} \;
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src=\"main-|src=\"/$REPO_NAME/main-|g" {} \;
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"main-|href=\"/$REPO_NAME/main-|g" {} \;
-          
-          # Also handle paths with single quotes
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href='styles-|href=\"/$REPO_NAME/styles-|g" {} \;
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src='main-|src=\"/$REPO_NAME/main-|g" {} \;
-          
-          echo "✓ Asset paths rewritten in all HTML files"
+          echo "✓ Asset paths fixed (kept relative, fixed absolute image paths)"
           
           # List all prerendered routes
           echo ""
@@ -144,9 +138,38 @@ jobs:
           echo "Base-href in about/index.html:"
           grep -o '<base href="[^"]*"' "$BROWSER_ROOT/about/index.html" | head -1 || echo "about/index.html not found"
           echo ""
-          echo "Sample asset paths in about/index.html:"
-          grep -o 'href="[^"]*\.css"' "$BROWSER_ROOT/about/index.html" | head -2 || echo "No CSS found"
-          grep -o 'src="[^"]*\.js"' "$BROWSER_ROOT/about/index.html" | head -2 || echo "No JS found"
+          echo "Sample asset paths in root index.html:"
+          echo "CSS:"
+          grep -o 'href="[^"]*\.css"' "$BROWSER_ROOT/index.html" | head -2 || echo "No CSS found"
+          echo "JS:"
+          grep -o 'src="[^"]*\.js"' "$BROWSER_ROOT/index.html" | head -2 || echo "No JS found"
+          echo "Images:"
+          grep -o 'src="[^"]*\.png"' "$BROWSER_ROOT/index.html" | head -2 || echo "No images found"
+          echo ""
+          echo "Verifying referenced files actually exist:"
+          JS_REF=$(grep -o 'src="[^"]*\.js"' "$BROWSER_ROOT/index.html" | head -1 | sed 's/src="//;s/"//')
+          CSS_REF=$(grep -o 'href="[^"]*\.css"' "$BROWSER_ROOT/index.html" | head -1 | sed 's/href="//;s/"//')
+          echo "JS reference: $JS_REF"
+          if [ -n "$JS_REF" ]; then
+            # Resolve relative to base-href or check if file exists
+            if [ -f "$BROWSER_ROOT/$JS_REF" ]; then
+              echo "✓ Referenced JS file exists at: $BROWSER_ROOT/$JS_REF"
+            else
+              echo "✗ Referenced JS file MISSING at: $BROWSER_ROOT/$JS_REF"
+              echo "  Looking for actual JS files:"
+              ls -la "$BROWSER_ROOT"/main-*.js 2>/dev/null | head -2
+            fi
+          fi
+          echo "CSS reference: $CSS_REF"
+          if [ -n "$CSS_REF" ]; then
+            if [ -f "$BROWSER_ROOT/$CSS_REF" ]; then
+              echo "✓ Referenced CSS file exists at: $BROWSER_ROOT/$CSS_REF"
+            else
+              echo "✗ Referenced CSS file MISSING at: $BROWSER_ROOT/$CSS_REF"
+              echo "  Looking for actual CSS files:"
+              ls -la "$BROWSER_ROOT"/styles-*.css 2>/dev/null | head -2
+            fi
+          fi
 
       - name: Verify final artifact structure
         run: |
@@ -213,6 +236,26 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
+      - name: Verify artifact structure before upload
+        run: |
+          BROWSER_ROOT="dist/DentrizWeb/browser"
+          echo "=== Final Artifact Structure Before Upload ==="
+          echo "Root files:"
+          ls -la "$BROWSER_ROOT/" | head -15
+          echo ""
+          echo "Checking critical files exist at root:"
+          [ -f "$BROWSER_ROOT/main-"*.js ] && echo "✓ JS file exists at root" || echo "✗ JS file MISSING at root"
+          [ -f "$BROWSER_ROOT/styles-"*.css ] && echo "✓ CSS file exists at root" || echo "✗ CSS file MISSING at root"
+          [ -d "$BROWSER_ROOT/images" ] && echo "✓ images directory exists" || echo "✗ images directory MISSING"
+          echo ""
+          echo "Sample HTML file asset references:"
+          if [ -f "$BROWSER_ROOT/index.html" ]; then
+            echo "From index.html:"
+            grep -o 'src="[^"]*\.js"' "$BROWSER_ROOT/index.html" | head -1
+            grep -o 'href="[^"]*\.css"' "$BROWSER_ROOT/index.html" | head -1
+            grep -o 'src="[^"]*\.png"' "$BROWSER_ROOT/index.html" | head -1
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
