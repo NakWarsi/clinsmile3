@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "start": "node server.js",
-    "build": "ng build --configuration production",
-    "build:static": "ng build --configuration production --output-path=dist/DentrizWeb/browser",
-    "build:github-pages": "ng build --configuration production --base-href=/clinsmile3/ --output-path=dist/DentrizWeb/browser",
+    "build": "ng build --configuration production --base-href /",
+    "build:static": "ng build --configuration production --base-href / --output-path=dist/DentrizWeb/browser",
+    "build:github-pages": "ng build --configuration production --base-href / --output-path=dist/DentrizWeb/browser",
     "postinstall": "npm run build:static"
   },
   "prettier": {
