@@ -19,6 +19,11 @@ import { GlobalConfigService, GlobalConfig } from '../config/global-config.servi
   host: { ngSkipHydration: '' }
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  // Hero slider properties
+  currentSlide = 0;
+  totalSlides = 3;
+  private autoSlideInterval: any;
+
   // Founder section properties (following reference project pattern)
   @ViewChild('subtitleInput') subtitleInput!: ElementRef<HTMLInputElement>;
   
@@ -128,9 +133,62 @@ export class HomeComponent implements OnInit, OnDestroy {
     // event.target.src = '/images/clinic/fallback-image.jpg';
   }
 
+  // Hero slider methods
+  changeSlide(direction: number) {
+    this.stopAutoSlide();
+    this.currentSlide = (this.currentSlide + direction + this.totalSlides) % this.totalSlides;
+    this.updateSlides();
+    this.startAutoSlide();
+  }
+
+  goToSlide(index: number) {
+    this.stopAutoSlide();
+    this.currentSlide = index;
+    this.updateSlides();
+    this.startAutoSlide();
+  }
+
+  updateSlides() {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    slides.forEach((slide, index) => {
+      if (index === this.currentSlide) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+
+    dots.forEach((dot, index) => {
+      if (index === this.currentSlide) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  }
+
+  startAutoSlide() {
+    this.autoSlideInterval = setInterval(() => {
+      this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+      this.updateSlides();
+    }, 5000); // Change slide every 5 seconds
+  }
+
+  stopAutoSlide() {
+    if (this.autoSlideInterval) {
+      clearInterval(this.autoSlideInterval);
+    }
+  }
+
   // Auto-advance carousel (optional)
   ngOnInit() {
     console.log('🚀 Initializing home component...');
+    
+    // Initialize hero slider
+    this.startAutoSlide();
+    this.updateSlides();
     
     // Subscribe to global configuration changes
     this.configSubscription = this.globalConfigService.config$.subscribe(config => {
@@ -148,13 +206,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loadReasonsSectionConfig();
     this.loadServicesSectionConfig();
     
-    // Auto-advance every 5 seconds
+    // Auto-advance clinic images carousel every 5 seconds
     setInterval(() => {
       this.nextImage();
     }, 5000);
   }
 
   ngOnDestroy() {
+    this.stopAutoSlide();
     if (this.configSubscription) {
       this.configSubscription.unsubscribe();
     }
