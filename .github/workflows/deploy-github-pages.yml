@@ -53,11 +53,13 @@ jobs:
 
       - name: Build
         run: |
-          REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
-          echo "Building with base-href: /$REPO_NAME/"
+          # Use root base-href for custom domain, or subdirectory for GitHub Pages subdomain
+          # Custom domain (clinsmile.in) serves from root, so use /
+          BASE_HREF="/"
+          echo "Building with base-href: $BASE_HREF (for custom domain)"
           echo "Build timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
           echo "Commit SHA: ${{ github.sha }}"
-          npx ng build --configuration production --base-href=/$REPO_NAME/ --output-path=dist/DentrizWeb
+          npx ng build --configuration production --base-href=$BASE_HREF --output-path=dist/DentrizWeb
           echo "Build completed"
           
           # Angular creates browser/ subdirectory, so actual output is at dist/DentrizWeb/browser/
@@ -119,25 +121,25 @@ jobs:
           echo "=== File Verification ==="
           ls -lh "$BROWSER_ROOT/index.html" "$BROWSER_ROOT/404.html"
           
-          # Fix base-href and rewrite absolute asset paths
-          REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          # Verify base-href is correct for custom domain (should be /)
+          BASE_HREF="/"
           echo ""
-          echo "=== Fixing base-href and asset paths ==="
+          echo "=== Verifying base-href for custom domain ==="
           
-          # Fix base-href in ALL HTML files - handle various formats
-          echo "Fixing base-href in all HTML files..."
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href=\"/\">|<base href=\"/$REPO_NAME/\">|g" {} \;
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href='/'>|<base href=\"/$REPO_NAME/\">|g" {} \;
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href=\"\/\">|<base href=\"/$REPO_NAME/\">|g" {} \;
+          # Check base-href in all HTML files
+          echo "Checking base-href in all HTML files..."
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec grep -H '<base href=' {} \; | head -5
           
-          # Verify base-href was fixed
-          echo "Verifying base-href fix..."
-          WRONG_BASE_COUNT=$(find "$BROWSER_ROOT" -name "*.html" -type f -exec grep -l '<base href="/">' {} \; | wc -l)
+          # Verify base-href is set to / (for custom domain)
+          WRONG_BASE_COUNT=$(find "$BROWSER_ROOT" -name "*.html" -type f -exec grep -l '<base href="/clinsmile3/">' {} \; | wc -l)
           if [ "$WRONG_BASE_COUNT" -gt 0 ]; then
-            echo "WARNING: $WRONG_BASE_COUNT HTML files still have wrong base-href"
-            find "$BROWSER_ROOT" -name "*.html" -type f -exec grep -l '<base href="/">' {} \;
+            echo "WARNING: $WRONG_BASE_COUNT HTML files have wrong base-href (should be / for custom domain)"
+            echo "Fixing base-href to / for custom domain..."
+            find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href=\"/clinsmile3/\">|<base href=\"/\">|g" {} \;
+            find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href='/clinsmile3/'>|<base href=\"/\">|g" {} \;
+            echo "✓ Base-href fixed to / for custom domain"
           else
-            echo "✓ Base-href fixed in all HTML files"
+            echo "✓ Base-href is correct (/ for custom domain)"
           fi
           
           # Fix absolute image paths to be relative (they should respect base-href)
@@ -337,6 +339,16 @@ jobs:
             mkdir -p "$EXPECTED_ROOT"
             cp -r "$BROWSER_ROOT"/* "$EXPECTED_ROOT/"
             echo "✓ Files copied to $EXPECTED_ROOT"
+          fi
+          
+          # Ensure CNAME file exists for custom domain
+          if [ ! -f "$EXPECTED_ROOT/CNAME" ]; then
+            echo "Creating CNAME file for custom domain..."
+            echo "clinsmile.in" > "$EXPECTED_ROOT/CNAME"
+            echo "✓ CNAME file created"
+          else
+            echo "✓ CNAME file already exists"
+            cat "$EXPECTED_ROOT/CNAME"
           fi
 
       - name: Upload artifact

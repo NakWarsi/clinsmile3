@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "start": "node server.js",
-    "build": "ng build --configuration production --base-href /clinsmile3/ && node scripts/copy-404.js",
-    "build:static": "ng build --configuration production --base-href /clinsmile3/ --output-path=dist/DentrizWeb/browser && node scripts/copy-404.js",
-    "build:github-pages": "ng build --configuration production --base-href /clinsmile3/ --output-path=dist/DentrizWeb/browser && node scripts/copy-404.js",
+    "build": "ng build --configuration production --base-href / && node scripts/copy-404.js",
+    "build:static": "ng build --configuration production --base-href / --output-path=dist/DentrizWeb/browser && node scripts/copy-404.js",
+    "build:github-pages": "ng build --configuration production --base-href / --output-path=dist/DentrizWeb/browser && node scripts/copy-404.js",
+    "build:github-pages-subdir": "ng build --configuration production --base-href /clinsmile3/ --output-path=dist/DentrizWeb/browser && node scripts/copy-404.js",
     "postinstall": "npm run build:static"
   },
   "prettier": {
