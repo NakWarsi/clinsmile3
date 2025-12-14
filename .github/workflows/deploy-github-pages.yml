@@ -95,29 +95,30 @@ jobs:
           echo ""
           echo "=== Fixing base-href and asset paths ==="
           
-          # Fix base-href if needed
-          if grep -q '<base href="/">' "$BROWSER_ROOT/index.html"; then
-            echo "Fixing base-href from '/' to '/$REPO_NAME/'"
-            sed -i "s|<base href=\"/\">|<base href=\"/$REPO_NAME/\">|g" "$BROWSER_ROOT/index.html"
-            sed -i "s|<base href=\"/\">|<base href=\"/$REPO_NAME/\">|g" "$BROWSER_ROOT/404.html"
-            echo "✓ Base-href fixed"
-          else
-            echo "Base-href already correct"
-          fi
+          # Fix base-href in ALL HTML files if needed
+          echo "Fixing base-href in all HTML files..."
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href=\"/\">|<base href=\"/$REPO_NAME/\">|g" {} \;
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href=\"/\">|<base href=\"/$REPO_NAME/\">|g" {} \;
+          echo "✓ Base-href fixed in all HTML files"
           
-          # Rewrite absolute paths to respect base-href
+          # Rewrite absolute paths to respect base-href in ALL HTML files
           # Fix /images/ paths to /$REPO_NAME/images/
-          echo "Rewriting absolute asset paths..."
-          sed -i "s|src=\"/images/|src=\"/$REPO_NAME/images/|g" "$BROWSER_ROOT/index.html"
-          sed -i "s|src=\"/images/|src=\"/$REPO_NAME/images/|g" "$BROWSER_ROOT/404.html"
-          sed -i "s|href=\"/images/|href=\"/$REPO_NAME/images/|g" "$BROWSER_ROOT/index.html"
-          sed -i "s|href=\"/images/|href=\"/$REPO_NAME/images/|g" "$BROWSER_ROOT/404.html"
-          
-          # Also fix in all other HTML files
+          echo "Rewriting absolute asset paths in all HTML files..."
           find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src=\"/images/|src=\"/$REPO_NAME/images/|g" {} \;
           find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"/images/|href=\"/$REPO_NAME/images/|g" {} \;
           
-          echo "✓ Asset paths rewritten"
+          # Fix JS and CSS paths that might be absolute
+          # These should already be relative, but let's check and fix if needed
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src=\"/main-|src=\"/$REPO_NAME/main-|g" {} \;
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"/styles-|href=\"/$REPO_NAME/styles-|g" {} \;
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"/main-|href=\"/$REPO_NAME/main-|g" {} \;
+          
+          echo "✓ Asset paths rewritten in all HTML files"
+          
+          # List all prerendered routes
+          echo ""
+          echo "=== Prerendered Routes ==="
+          find "$BROWSER_ROOT" -name "index.html" -type f | sort
           
           # Verify base-href after fix
           echo "Final base-href check:"
@@ -173,6 +174,18 @@ jobs:
           if [ -f "$BROWSER_ROOT/index.html" ]; then
             grep -o '<base href="[^"]*"' "$BROWSER_ROOT/index.html" || echo "No base tag found"
           fi
+          
+          # Verify critical routes exist
+          echo ""
+          echo "=== Verifying Critical Routes ==="
+          [ -f "$BROWSER_ROOT/about/index.html" ] && echo "✓ /about route exists" || echo "✗ /about route MISSING"
+          [ -f "$BROWSER_ROOT/contact/index.html" ] && echo "✓ /contact route exists" || echo "✗ /contact route MISSING"
+          [ -f "$BROWSER_ROOT/services/index.html" ] && echo "✓ /services route exists" || echo "✗ /services route MISSING"
+          [ -f "$BROWSER_ROOT/smile-gallery/index.html" ] && echo "✓ /smile-gallery route exists" || echo "✗ /smile-gallery route MISSING"
+          
+          # Count total prerendered routes
+          ROUTE_COUNT=$(find "$BROWSER_ROOT" -name "index.html" -type f | wc -l)
+          echo "Total prerendered routes: $ROUTE_COUNT"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
