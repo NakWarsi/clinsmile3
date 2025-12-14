@@ -95,23 +95,38 @@ jobs:
           echo ""
           echo "=== Fixing base-href and asset paths ==="
           
-          # Fix base-href in ALL HTML files if needed
+          # Fix base-href in ALL HTML files - handle various formats
           echo "Fixing base-href in all HTML files..."
           find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href=\"/\">|<base href=\"/$REPO_NAME/\">|g" {} \;
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href=\"/\">|<base href=\"/$REPO_NAME/\">|g" {} \;
-          echo "✓ Base-href fixed in all HTML files"
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href='/'>|<base href=\"/$REPO_NAME/\">|g" {} \;
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|<base href=\"\/\">|<base href=\"/$REPO_NAME/\">|g" {} \;
           
-          # Rewrite absolute paths to respect base-href in ALL HTML files
-          # Fix /images/ paths to /$REPO_NAME/images/
-          echo "Rewriting absolute asset paths in all HTML files..."
+          # Verify base-href was fixed
+          echo "Verifying base-href fix..."
+          WRONG_BASE_COUNT=$(find "$BROWSER_ROOT" -name "*.html" -type f -exec grep -l '<base href="/">' {} \; | wc -l)
+          if [ "$WRONG_BASE_COUNT" -gt 0 ]; then
+            echo "WARNING: $WRONG_BASE_COUNT HTML files still have wrong base-href"
+            find "$BROWSER_ROOT" -name "*.html" -type f -exec grep -l '<base href="/">' {} \;
+          else
+            echo "✓ Base-href fixed in all HTML files"
+          fi
+          
+          # Rewrite asset paths to be absolute and respect base-href
+          echo "Rewriting asset paths in all HTML files..."
+          
+          # Fix absolute image paths
           find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src=\"/images/|src=\"/$REPO_NAME/images/|g" {} \;
           find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"/images/|href=\"/$REPO_NAME/images/|g" {} \;
           
-          # Fix JS and CSS paths that might be absolute
-          # These should already be relative, but let's check and fix if needed
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src=\"/main-|src=\"/$REPO_NAME/main-|g" {} \;
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"/styles-|href=\"/$REPO_NAME/styles-|g" {} \;
-          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"/main-|href=\"/$REPO_NAME/main-|g" {} \;
+          # Convert relative JS/CSS paths to absolute paths that respect base-href
+          # Pattern: href="styles-XXX.css" or src="main-XXX.js" (relative) -> href="/$REPO_NAME/styles-XXX.css"
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"styles-|href=\"/$REPO_NAME/styles-|g" {} \;
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src=\"main-|src=\"/$REPO_NAME/main-|g" {} \;
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href=\"main-|href=\"/$REPO_NAME/main-|g" {} \;
+          
+          # Also handle paths with single quotes
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|href='styles-|href=\"/$REPO_NAME/styles-|g" {} \;
+          find "$BROWSER_ROOT" -name "*.html" -type f -exec sed -i "s|src='main-|src=\"/$REPO_NAME/main-|g" {} \;
           
           echo "✓ Asset paths rewritten in all HTML files"
           
@@ -121,8 +136,17 @@ jobs:
           find "$BROWSER_ROOT" -name "index.html" -type f | sort
           
           # Verify base-href after fix
-          echo "Final base-href check:"
+          echo ""
+          echo "=== Final Verification ==="
+          echo "Base-href in root index.html:"
           grep -o '<base href="[^"]*"' "$BROWSER_ROOT/index.html" | head -1
+          echo ""
+          echo "Base-href in about/index.html:"
+          grep -o '<base href="[^"]*"' "$BROWSER_ROOT/about/index.html" | head -1 || echo "about/index.html not found"
+          echo ""
+          echo "Sample asset paths in about/index.html:"
+          grep -o 'href="[^"]*\.css"' "$BROWSER_ROOT/about/index.html" | head -2 || echo "No CSS found"
+          grep -o 'src="[^"]*\.js"' "$BROWSER_ROOT/about/index.html" | head -2 || echo "No JS found"
 
       - name: Verify final artifact structure
         run: |
