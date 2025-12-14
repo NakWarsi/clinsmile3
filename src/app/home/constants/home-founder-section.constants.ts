@@ -14,7 +14,7 @@ export const HOME_FOUNDER_SECTION_CONSTANTS = {
   ],
   DEFAULT_MISSION: 'Dr. Mankar\'s mission is not just to treat dental concerns but to help patients achieve lifelong oral health, confidence, and beautiful smiles.',
   DEFAULT_IMAGE: {
-    SRC: '/images/home/dr-rizwana-khan-c1.jpg?v=2',
+    SRC: 'images/home/dr-rizwana-khan-c1.jpg?v=2',
     ALT: 'Dr. Akash Mankar - Founder & Chief Dentist',
     NAME: 'Dr. Akash Mankar',
     CREDENTIALS: '(BDS. Govt. Dental College, Mumbai)'

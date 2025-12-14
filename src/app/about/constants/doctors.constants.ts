@@ -9,7 +9,7 @@ export const DOCTORS_CONSTANTS = {
       name: 'Dr. Akash Mankar, BDS',
       title: 'Founder and Chief Dentist',
       title2: 'owner',
-      image: '/images/home/dr-rizwana-khan-c1.jpg',
+      image: 'images/home/dr-rizwana-khan-c1.jpg',
       bio: [
         'Dr. Akash Mankar is a highly skilled dental professional with a <strong>Bachelor of Dental Surgery (BDS)</strong> degree from <strong>Government Dental College, Mumbai</strong> — one of India\'s premier dental institutions.',
         'She has over <strong>8 years of clinical experience</strong> in dentistry, including <strong>3 years of service as a government dentist at GDC Mumbai</strong>, where she gained extensive expertise in treating a wide range of dental conditions.',
@@ -21,7 +21,7 @@ export const DOCTORS_CONSTANTS = {
       name: 'Dr. Ahmed Ameen, BDS',
       title: 'Orthodontist & Implant Specialist',      
       title2: 'visting consultant',
-      image: '/images/doctors/dr-ahmed-ameen.jpg',
+      image: 'images/doctors/dr-ahmed-ameen.jpg',
       bio: [
         'Dr. Ahmed Ameen is a specialized orthodontist with advanced training in dental implants and orthodontic treatments.',
         'With <strong>10+ years of experience</strong> in orthodontics, he specializes in <strong>braces, Invisalign, and dental implant procedures</strong>.',
@@ -33,7 +33,7 @@ export const DOCTORS_CONSTANTS = {
       name: 'Dr. Sarah Johnson, MDS',
       title: 'Pediatric Dentist',     
       title2: 'visting consultant',
-      image: '/images/doctors/dr-sarah-johnson.jpg',
+      image: 'images/doctors/dr-sarah-johnson.jpg',
       bio: [
         'Dr. Sarah Johnson is a dedicated pediatric dentist with a passion for making dental care enjoyable for children.',
         'She has <strong>12 years of experience</strong> in pediatric dentistry and specializes in <strong>child-friendly treatments, preventive care, and early orthodontic intervention</strong>.',
@@ -45,7 +45,7 @@ export const DOCTORS_CONSTANTS = {
       name: 'Dr. Michael Chen, BDS',
       title: 'Endodontist & Root Canal Specialist',     
       title2: 'visting consultant',
-      image: '/images/doctors/dr-michael-chen.jpg',
+      image: 'images/doctors/dr-michael-chen.jpg',
       bio: [
         'Dr. Michael Chen is an experienced endodontist specializing in root canal treatments and endodontic procedures.',
         'With <strong>9 years of expertise</strong> in endodontics, he provides <strong>painless root canal treatments, endodontic surgery, and emergency dental care</strong>.',

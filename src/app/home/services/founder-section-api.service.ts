@@ -76,7 +76,7 @@ export class FounderSectionApiService {
             'Pediatric dentistry'
           ],
           mission: data.mission || 'Dr. Mankar\'s mission is not just to treat dental concerns but to help patients achieve lifelong oral health, confidence, and beautiful smiles.',
-          imageSrc: data.image?.src || '/images/home/dr-rizwana-khan-c1.jpg?v=2',
+          imageSrc: data.image?.src || 'images/home/dr-rizwana-khan-c1.jpg?v=2',
           imageAlt: data.image?.alt || 'Dr. Akash Mankar - Founder & Chief Dentist',
           imageName: data.image?.name || 'Dr. Akash Mankar',
           credentials: data.image?.credentials || '(BDS. Govt. Dental College, Mumbai)',
