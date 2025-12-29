@@ -7,13 +7,13 @@ export const TESTIMONIALS_CONSTANTS = {
   DEFAULT_TESTIMONIALS: [
     {
       stars: '⭐⭐⭐⭐⭐',
-      text: 'The staff at DentRiz Dental are friendly and efficient. Dr. Ahmed in particular is a joy to be around! The whole experience was comfortable and professional.',
+      text: 'The staff at ClinSmile Dental are friendly and efficient. Dr. Ahmed in particular is a joy to be around! The whole experience was comfortable and professional.',
       authorName: 'Aleena O.',
       authorTitle: 'Verified Patient'
     },
     {
       stars: '⭐⭐⭐⭐⭐',
-      text: 'First visit to DentRiz Dental and the staff couldn\'t be more friendly! It\'s amazing how much easier visiting the dentist is these days. Highly recommended!',
+      text: 'First visit to ClinSmile Dental and the staff couldn\'t be more friendly! It\'s amazing how much easier visiting the dentist is these days. Highly recommended!',
       authorName: 'Mike Zita',
       authorTitle: 'Verified Patient'
     },

@@ -153,7 +153,7 @@ export class GlobalConfigToggleComponent implements OnInit, OnDestroy {
     const adminMode = urlParams.get('admin');
     
     // Check localStorage
-    const storedAdminMode = localStorage.getItem('dentriz-admin-mode');
+    const storedAdminMode = localStorage.getItem('clinsmile-admin-mode');
     
     this.showToggle = adminMode === 'true' || storedAdminMode === 'true';
   }

@@ -87,7 +87,7 @@ this.globalConfigService.config$.subscribe(config => {
 
 The admin toggle panel can be accessed by:
 1. Adding `?admin=true` to any URL
-2. Setting `localStorage.setItem('dentriz-admin-mode', 'true')` in browser console
+2. Setting `localStorage.setItem('clinsmile-admin-mode', 'true')` in browser console
 
 ## Default Configuration
 

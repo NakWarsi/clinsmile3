@@ -299,7 +299,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     
     // Save to localStorage as backup - only in browser
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('dentrizFounderSectionConfig', JSON.stringify(this.founderConfig));
+      localStorage.setItem('clinsmileFounderSectionConfig', JSON.stringify(this.founderConfig));
       console.log('Founder section config saved to localStorage');
     }
   }
@@ -314,7 +314,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   resetFounderToOriginal(): void {
     // Clear saved config and reload from JSON file - only in browser
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.removeItem('dentrizFounderSectionConfig');
+      localStorage.removeItem('clinsmileFounderSectionConfig');
     }
     this.founderLoading = true;
     this.founderError = false;
