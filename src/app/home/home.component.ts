@@ -87,25 +87,39 @@ export class HomeComponent implements OnInit, OnDestroy {
       caption: 'Modern Dental Clinic'
     },
     {
-      src: 'images/clinic/clinic-interior.jpg',
+      src: 'images/clinic/clinic-interior.jpeg',
       alt: 'ClinSmile Dental Clinic Interior',
       caption: 'State-of-the-Art Equipment'
     },
-    // Add PNG images directly
     {
-      src: 'images/clinic/1.jpg',
+      src: 'images/clinic/1.jpeg',
       alt: 'ClinSmile Dental Clinic - Treatment Room',
       caption: 'Advanced Treatment Facilities'
     },
     {
-      src: 'images/clinic/2.png',
+      src: 'images/clinic/2.jpg',
       alt: 'ClinSmile Dental Clinic - Waiting Area',
       caption: 'Comfortable Waiting Area'
     },
     {
-      src: 'images/clinic/3.png',
+      src: 'images/clinic/3.jpg',
       alt: 'ClinSmile Dental Clinic - Modern Dental Chair',
       caption: 'State-of-the-Art Dental Equipment'
+    },
+    {
+      src: 'images/clinic/4.jpeg',
+      alt: 'ClinSmile Dental Clinic - Reception Area',
+      caption: 'Welcoming Reception Area'
+    },
+    {
+      src: 'images/clinic/5.jpg',
+      alt: 'ClinSmile Dental Clinic - Dental Equipment',
+      caption: 'Advanced Dental Technology'
+    },
+    {
+      src: 'images/clinic/6.jpg',
+      alt: 'ClinSmile Dental Clinic - Treatment Facility',
+      caption: 'Modern Treatment Rooms'
     }
   ];
 

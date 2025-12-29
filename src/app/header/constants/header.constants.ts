@@ -3,7 +3,7 @@ export const HEADER_CONSTANTS = {
   DEFAULT_LOGO_ALT: 'ClinSmile Dental Clinic Logo',
   DEFAULT_LOGO_IMAGE: 'images/clinic/logo.png',
   DEFAULT_CLINIC_NAME: 'ClinSmile Dental Clinic',
-  DEFAULT_TAGLINE: 'Multi Speciality Dental Clinic & Implant Center',
+  DEFAULT_TAGLINE: 'Multi speciality dental clinic & Orthodontic center',
 
   // Navigation Items
   DEFAULT_NAV_ITEMS: [

@@ -6,12 +6,12 @@ export const DOCTORS_CONSTANTS = {
   // Default Doctors Data
   DEFAULT_DOCTORS: [
     {
-      name: 'Dr. Akash Mankar, BDS',
-      title: 'Founder and Chief Dentist',
+      name: 'Dr. Akash Mankare',
+      title: 'Founder & Chief Dentist',
       title2: 'owner',
       image: 'images/home/dr-rizwana-khan-c1.jpg',
       bio: [
-        'Dr. Akash Mankar is a highly skilled dental professional with a <strong>Bachelor of Dental Surgery (BDS)</strong> degree from <strong>Government Dental College, Mumbai</strong> — one of India\'s premier dental institutions.',
+        'Dr. Akash Mankare is a highly skilled dental professional with a <strong>Bachelor of Dental Surgery (BDS)</strong> degree from <strong>Government Dental College, Mumbai</strong> — one of India\'s premier dental institutions.',
         'She has over <strong>8 years of clinical experience</strong> in dentistry, including <strong>3 years of service as a government dentist at GDC Mumbai</strong>, where she gained extensive expertise in treating a wide range of dental conditions.',
         'Dr. Rizwana specializes in <strong>cosmetic dentistry, Invisalign treatment, and comprehensive family care</strong>. Known for her gentle approach, clear communication, and attention to detail, she ensures that every patient feels comfortable and confident throughout their treatment journey.'
       ],

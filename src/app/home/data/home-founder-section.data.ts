@@ -1,23 +1,15 @@
 export const founderData = {
   "subtitle": "Know your Doctor",
-  "doctorName": "Dr. Akash Mankar",
+  "doctorName": "Dr. Akash Mankare",
   "title": "Founder & Chief Dentist",
-  "description": "A proud graduate of Government Dental College, Mumbai — one of the most prestigious dental institutions in India. With around 10 years of experience, Dr. Mankar has honed his expertise in a wide range of specialties including:",
-  "specialties": [
-    "Cosmetic dentistry",
-    "Dental implants",
-    "Smile designing",
-    "Root canal treatments",
-    "Full-mouth rehabilitation",
-    "Preventive care",
-    "Pediatric dentistry"
-  ],
-  "mission": "Dr. Mankar's mission is not just to treat dental concerns but to help patients achieve lifelong oral health, confidence, and beautiful smiles.",
+  "description": "Dr. Akash Mankare is a qualified Orthodontist and Cosmetic Dentist, having completed his BDS from Government Dental College, Mumbai, and MDS in Orthodontics. He specializes in Invisalign®️ clear aligners and all types of braces, offering advanced orthodontic treatment for children, teenagers, and adults.",
+  "specialties": [],
+  "mission": "With expertise in metal braces, ceramic braces, self-ligating braces, and clear aligner therapy, Dr. Mankare provides customized treatment plans focused on precision, comfort, and long-term results. He is also skilled in general dentistry and cosmetic dental procedures, ensuring comprehensive smile care under one roof.\n\nDr. Mankare is committed to delivering modern, ethical, and evidence-based orthodontic care, helping patients achieve healthy, confident, and well-aligned smiles.",
   "image": {
     "src": "images/home/dr-rizwana-khan-c1.jpg?v=2",
-    "alt": "Dr. Akash Mankar - Founder & Chief Dentist",
-    "name": "Dr. Akash Mankar",
-    "credentials": "(BDS. Govt. Dental College, Mumbai)"
+    "alt": "Dr. Akash Mankare - Founder & Chief Dentist",
+    "name": "Dr. Akash Mankare",
+    "credentials": "BDS - Govt. Dental College, Mumbai<br>MDS in Orthodontics"
   },
   "philosophy": {
     "title": "Our Philosophy:",
