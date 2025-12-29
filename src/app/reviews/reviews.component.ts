@@ -110,7 +110,7 @@ export class ReviewsComponent {
     {
       name: 'Patient G',
       rating: 5,
-      text: 'Endodontist Navi Mumbai saved my tooth! Teeth whitening in Roadpali and veneers in Roadpali. Expert orthodontist in Roadpali at DentRiz.',
+      text: 'Endodontist Navi Mumbai saved my tooth! Teeth whitening in Roadpali and veneers in Roadpali. Expert orthodontist in Roadpali at ClinSmile.',
       platform: 'Google',
       date: '2023-12-28'
     },

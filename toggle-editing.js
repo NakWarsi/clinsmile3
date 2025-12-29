@@ -43,7 +43,7 @@ function main() {
     updateEnvironmentFile(envProdPath, false);
     console.log('✅ Editing is now DISABLED. Restart your dev server to see changes.');
   } else {
-    console.log('🎛️  DentRiz Editing Control');
+    console.log('🎛️  ClinSmile Editing Control');
     console.log('');
     console.log('Usage:');
     console.log('  node toggle-editing.js on   - Enable all editing');

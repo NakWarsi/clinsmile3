@@ -2,7 +2,7 @@
   "logoAlt": "ClinSmile Dental Clinic Logo",
   "logoImage": "images/clinic/logo.png",
   "clinicName": "ClinSmile Dental Clinic",
-  "tagline": "Multi Speciality Dental Clinic & Implant Center",
+  "tagline": "Multi speciality dental clinic & Orthodontic center",
   "navItems": [
     { "label": "Home", "route": "/", "exact": true },
     { "label": "Services", "route": "/services", "exact": false },

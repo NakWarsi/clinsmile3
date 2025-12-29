@@ -12,5 +12,5 @@ import { AppointmentButtonComponent } from './appointment-button/appointment-but
   styleUrl: './app.css'
 })
 export class AppComponent {
-  title = 'DentRiz Dental';
+  title = 'ClinSmile Dental';
 }

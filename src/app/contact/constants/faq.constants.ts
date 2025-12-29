@@ -7,7 +7,7 @@ export const FAQ_CONSTANTS = {
   DEFAULT_FAQ_ITEMS: [
     {
       question: 'How do I schedule an appointment?',
-      answer: 'You can schedule an appointment by calling us at 97682 64663S, or you can request an appointment through our website. We\'ll work with you to find a convenient time.'
+      answer: 'You can schedule an appointment by calling us at +91 8828424663, or you can request an appointment through our website. We\'ll work with you to find a convenient time.'
     },
     {
       question: 'What should I bring to my first appointment?',
@@ -15,7 +15,7 @@ export const FAQ_CONSTANTS = {
     },
     {
       question: 'Do you offer emergency dental care?',
-      answer: 'Yes, we provide emergency dental care. If you have a dental emergency, please call us immediately at (555) 123-4567, and we\'ll help you get the care you need.'
+      answer: 'Yes, we provide emergency dental care. If you have a dental emergency, please call us immediately at +91 8828424663, and we\'ll help you get the care you need.'
     },
     {
       question: 'What insurance plans do you accept?',

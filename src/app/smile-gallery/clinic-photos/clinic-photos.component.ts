@@ -25,58 +25,58 @@ export class ClinicPhotosComponent {
   clinicPhotos: ClinicPhoto[] = [
     {
       id: 1,
-      title: "Reception Area",
+      title: "Clinic Exterior",
       area: "reception",
-      description: "Welcome to our modern, comfortable reception area designed for your relaxation",
-      image: "assets/images/gallery/clinic-photos/reception1.jpg",
-      features: ["Comfortable seating", "Free WiFi", "Refreshments", "Magazines & TV"]
+      description: "Welcome to our modern, comfortable clinic designed for your relaxation",
+      image: "images/clinic/clinic-exterior.jpg",
+      features: ["Modern facility", "Easy access", "Parking available", "Welcoming entrance"]
     },
     {
       id: 2,
-      title: "Reception Desk",
+      title: "Clinic Interior",
       area: "reception",
-      description: "Our friendly staff ready to assist you with appointments and information",
-      image: "assets/images/gallery/clinic-photos/reception2.jpg",
-      features: ["Professional staff", "Easy check-in", "Insurance assistance", "Payment options"]
+      description: "Our friendly and comfortable interior space",
+      image: "images/clinic/clinic-interior.jpeg",
+      features: ["Comfortable seating", "Modern design", "Clean environment", "Professional atmosphere"]
     },
     {
       id: 3,
-      title: "Waiting Area",
-      area: "waiting",
-      description: "Spacious waiting area with modern amenities for your comfort",
-      image: "assets/images/gallery/clinic-photos/waiting-area1.jpg",
-      features: ["Comfortable chairs", "Entertainment", "Reading materials", "Children's area"]
-    },
-    {
-      id: 4,
-      title: "Relaxation Zone",
-      area: "waiting",
-      description: "Dedicated relaxation area for patients who need a quiet space",
-      image: "assets/images/gallery/clinic-photos/waiting-area2.jpg",
-      features: ["Quiet environment", "Comfortable seating", "Calming decor", "Privacy"]
-    },
-    {
-      id: 5,
-      title: "Treatment Room 1",
+      title: "Treatment Area 1",
       area: "treatment",
       description: "State-of-the-art treatment room equipped with latest technology",
-      image: "assets/images/gallery/clinic-photos/treatment-room1.jpg",
+      image: "images/clinic/1.jpeg",
       features: ["Advanced equipment", "Comfortable chair", "Sterile environment", "Modern lighting"]
     },
     {
-      id: 6,
-      title: "Treatment Room 2",
+      id: 4,
+      title: "Treatment Area 2",
       area: "treatment",
       description: "Another modern treatment room for various dental procedures",
-      image: "assets/images/gallery/clinic-photos/treatment-room2.jpg",
+      image: "images/clinic/2.jpg",
       features: ["Digital X-ray", "Intraoral camera", "Comfort amenities", "Privacy curtains"]
+    },
+    {
+      id: 5,
+      title: "Treatment Area 3",
+      area: "treatment",
+      description: "Modern dental treatment facility with advanced equipment",
+      image: "images/clinic/3.jpg",
+      features: ["Advanced technology", "Patient comfort", "Sterile environment", "Professional care"]
+    },
+    {
+      id: 6,
+      title: "Clinic Facility 4",
+      area: "treatment",
+      description: "Well-equipped treatment room for comprehensive dental care",
+      image: "images/clinic/4.jpeg",
+      features: ["Modern equipment", "Comfortable setting", "Professional care", "Advanced technology"]
     },
     {
       id: 7,
       title: "Dental Equipment",
       area: "equipment",
       description: "Advanced dental equipment for precise and comfortable treatment",
-      image: "assets/images/gallery/clinic-photos/equipment1.jpg",
+      image: "images/clinic/5.jpg",
       features: ["Digital scanners", "3D imaging", "Laser technology", "Sterilization units"]
     },
     {
@@ -84,24 +84,8 @@ export class ClinicPhotosComponent {
       title: "Advanced Technology",
       area: "equipment",
       description: "Cutting-edge technology for the best possible dental care",
-      image: "assets/images/gallery/clinic-photos/equipment2.jpg",
+      image: "images/clinic/6.jpg",
       features: ["CBCT scanner", "CAD/CAM system", "Digital impressions", "Treatment planning"]
-    },
-    {
-      id: 9,
-      title: "Staff Area",
-      area: "staff",
-      description: "Our dedicated team's workspace for coordination and patient care",
-      image: "assets/images/gallery/clinic-photos/staff-area1.jpg",
-      features: ["Team collaboration", "Patient records", "Communication center", "Professional environment"]
-    },
-    {
-      id: 10,
-      title: "Staff Lounge",
-      area: "staff",
-      description: "Comfortable break area for our hardworking dental team",
-      image: "assets/images/gallery/clinic-photos/staff-area2.jpg",
-      features: ["Break room", "Kitchen facilities", "Rest area", "Team bonding space"]
     }
   ];
 

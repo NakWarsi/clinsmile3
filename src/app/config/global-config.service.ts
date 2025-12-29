@@ -106,7 +106,7 @@ export class GlobalConfigService {
   private saveConfigToStorage(config: GlobalConfig): void {
     try {
       if (typeof window !== 'undefined' && window.localStorage) {
-        localStorage.setItem('dentriz-global-config', JSON.stringify(config));
+        localStorage.setItem('clinsmile-global-config', JSON.stringify(config));
       }
     } catch (error) {
       console.warn('Failed to save global config to localStorage:', error);
@@ -119,7 +119,7 @@ export class GlobalConfigService {
   private loadConfigFromStorage(): void {
     try {
       if (typeof window !== 'undefined' && window.localStorage) {
-        const stored = localStorage.getItem('dentriz-global-config');
+        const stored = localStorage.getItem('clinsmile-global-config');
         if (stored) {
           const config = JSON.parse(stored) as GlobalConfig;
           this.configSubject.next(config);

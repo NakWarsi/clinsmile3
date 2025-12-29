@@ -1,23 +1,15 @@
 export const HOME_FOUNDER_SECTION_CONSTANTS = {
   DEFAULT_SUBTITLE: 'Know your Doctor',
-  DEFAULT_DOCTOR_NAME: 'Dr. Akash Mankar',
+  DEFAULT_DOCTOR_NAME: 'Dr. Akash Mankare',
   DEFAULT_TITLE: 'Founder & Chief Dentist',
-  DEFAULT_DESCRIPTION: 'A proud graduate of Government Dental College, Mumbai — one of the most prestigious dental institutions in India. With around 10 years of experience, Dr. Mankar has honed his expertise in a wide range of specialties including:',
-  DEFAULT_SPECIALTIES: [
-    'Cosmetic dentistry',
-    'Dental implants',
-    'Smile designing',
-    'Root canal treatments',
-    'Full-mouth rehabilitation',
-    'Preventive care',
-    'Pediatric dentistry'
-  ],
-  DEFAULT_MISSION: 'Dr. Mankar\'s mission is not just to treat dental concerns but to help patients achieve lifelong oral health, confidence, and beautiful smiles.',
+  DEFAULT_DESCRIPTION: 'Dr. Akash Mankare is a qualified Orthodontist and Cosmetic Dentist, having completed his BDS from Government Dental College, Mumbai, and MDS in Orthodontics. He specializes in Invisalign®️ clear aligners and all types of braces, offering advanced orthodontic treatment for children, teenagers, and adults.',
+  DEFAULT_SPECIALTIES: [],
+  DEFAULT_MISSION: 'With expertise in metal braces, ceramic braces, self-ligating braces, and clear aligner therapy, Dr. Mankare provides customized treatment plans focused on precision, comfort, and long-term results. He is also skilled in general dentistry and cosmetic dental procedures, ensuring comprehensive smile care under one roof.\n\nDr. Mankare is committed to delivering modern, ethical, and evidence-based orthodontic care, helping patients achieve healthy, confident, and well-aligned smiles.',
   DEFAULT_IMAGE: {
     SRC: 'images/home/dr-rizwana-khan-c1.jpg?v=2',
-    ALT: 'Dr. Akash Mankar - Founder & Chief Dentist',
-    NAME: 'Dr. Akash Mankar',
-    CREDENTIALS: '(BDS. Govt. Dental College, Mumbai)'
+    ALT: 'Dr. Akash Mankare - Founder & Chief Dentist',
+    NAME: 'Dr. Akash Mankare',
+    CREDENTIALS: 'BDS - Govt. Dental College, Mumbai<br>MDS in Orthodontics'
   },
   DEFAULT_PHILOSOPHY: {
     TITLE: 'Our Philosophy:',

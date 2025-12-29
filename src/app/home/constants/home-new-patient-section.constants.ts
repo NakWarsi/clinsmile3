@@ -1,7 +1,7 @@
 export const HOME_NEW_PATIENT_SECTION_CONSTANTS = {
   DEFAULT_MAIN_TITLE: 'Clinic Accessibility & Nearby Convenience',
   DEFAULT_ADDRESS_TITLE: '📍 Address',
-  DEFAULT_ADDRESS_CONTENT: 'ClinSmile Dental Clinic <br>Ronak Residency, Plot No. 29, Roadpali <br> <br>Close to Kalamboli Bridge',
+  DEFAULT_ADDRESS_CONTENT: 'ClinSmile Dental Clinic <br>Shop No. 11, Ronak Residency, Plot No. 29, Sector- 20, Roadpali, Kalamboli, Navi Mumbai, Maharashtra 410218',
   DEFAULT_PARKING_TITLE: '🚗 Parking',
   DEFAULT_PARKING_CONTENT: 'Free parking available within our premises, with easy access for both two-wheelers and four-wheelers.',
   DEFAULT_TRANSIT_TITLE: '🚌 Public Transit',
